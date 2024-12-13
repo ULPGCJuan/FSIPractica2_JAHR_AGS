@@ -35,7 +35,7 @@ Este modelo fue entrenado sobre el conjunto de datos **Vehicles Image Dataset** 
 
 El segundo modelo fue una **red neuronal convolutiva personalizada (ConvNet)**, diseñada para trabajar con el conjunto de datos **Armenian Coins Dataset**. La arquitectura incluyó múltiples capas convolucionales, cada una seguida de normalización por lotes (Batch Normalization) y operaciones de max pooling. Estas capas convolucionales permitieron al modelo extraer características jerárquicas, mientras que la normalización por lotes mejoró la estabilidad del aprendizaje al reducir las variaciones en la distribución de activaciones entre los lotes de datos.
 
-El modelo también incluyó capas completamente conectadas con Dropout, lo que reforzó su capacidad de generalización. Este modelo fue entrenado durante 30 épocas, logrando un excelente desempeño. A continuación, se presentan las gráficas correspondientes al entrenamiento de este modelo y los resultados obtenidos en las métricas de pérdida y precisión:
+El modelo también incluyó capas completamente conectadas con Dropout del 50% de las neuronas, lo que reforzó su capacidad de generalización. Este modelo fue entrenado durante 30 épocas, logrando un excelente desempeño. A continuación, se presentan las gráficas correspondientes al entrenamiento de este modelo y los resultados obtenidos en las métricas de pérdida y precisión:
 
 
 ![Training2](https://github.com/user-attachments/assets/9724b9dc-d2ed-4366-9e14-b700f1c61ddc)
