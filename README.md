@@ -21,13 +21,22 @@ Para el entrenamiento de ambos modelos se utilizó Data Augmentation, una técni
 
 Entre las transformaciones aplicadas se incluyeron rotaciones aleatorias, que ayudan al modelo a reconocer patrones independientemente de la orientación; recortes redimensionados, que simulan diferentes perspectivas y escalas de los objetos; y alteraciones en el brillo, contraste, saturación y tonalidad de color, lo que imita variaciones en las condiciones de iluminación o calidad de las imágenes. Además, se añadieron reflejos horizontales aleatorios, que son particularmente útiles para mejorar la capacidad del modelo para identificar simetrías en los datos.
 
-El primer modelo fue un modelo de **aprendizaje por transferencia** basado en ResNet50, modificado con capas completamente conectadas, dropout. Este modelo fue entrenado sobre el conjunto de datos **Vehicles Image Dataset** durante 10 épocas. En la siguiente gráfica se muestra la evolución de la pérdida de entrenamiento y validación, así como la precisión de validación a lo largo del proceso de entrenamiento.
+El primer modelo fue un modelo de **aprendizaje por transferencia** basado en la arquitectura ResNet50, ampliamente utilizada por su capacidad para aprender representaciones profundas y generales de las imágenes. Esta red fue modificada con la adición de capas completamente conectadas y la implementación de una capa de Dropout con un valor de 0.5 para mejorar la generalización.
+
+El Dropout tiene como objetivo desactivar aleatoriamente el 50% de las neuronas de la capa durante cada iteración del entrenamiento, previniendo así que ciertas neuronas se acostumbren a las fotos del entrenamiento. Esto obliga al modelo a aprender características más generales, mejorando su capacidad para trabajar con datos no vistos y reduciendo el riesgo de sobreajuste. Durante la fase de validación, el Dropout no está activo, y las salidas se ajustan proporcionalmente.
+
+Adicionalmente, durante el entrenamiento de este modelo se utilizó un scheduler ReduceLROnPlateau, que ajusta dinámicamente el learning rate basándose en la precisión de validación. Si esta métrica no mejora durante cinco épocas consecutivas, el scheduler reduce el learning rate en un factor de 0.1, permitiendo una exploración más precisa en las etapas finales del entrenamiento. Esto resulta especialmente útil para evitar que el modelo quede atascado en mínimos locales o para estabilizar el aprendizaje cuando la pérdida deja de mejorar de manera significativa.
+
+Este modelo fue entrenado sobre el conjunto de datos **Vehicles Image Dataset** durante 10 épocas. En las siguientes gráficas se muestra la evolución de la pérdida de entrenamiento y validación, así como la precisión de validación a lo largo del proceso de entrenamiento.
 
 ![Training1](https://github.com/user-attachments/assets/75a87eb6-de2a-4975-8134-b8abee8d0cfb)
 
 ![Gráfica del entrenamiento ResNet50](https://github.com/user-attachments/assets/cb2998db-2fef-45f5-9d40-2f1bf74c76cd)
 
-El segundo modelo fue una **red neuronal convolutiva personalizada (ConvNet)** diseñada para trabajar con el conjunto de datos **Armenian Coins Dataset**. Esta arquitectura incluyó múltiples capas convolucionales con normalización por lotes, max pooling y capas completamente conectadas. Fue entrenada durante 30 épocas, logrando un excelente desempeño. A continuación, se presenta la figura correspondiente al entrenamiento de este modelo y la gráfica de pérdida y precisión del testeo del modeo.
+El segundo modelo fue una **red neuronal convolutiva personalizada (ConvNet)**, diseñada para trabajar con el conjunto de datos **Armenian Coins Dataset**. La arquitectura incluyó múltiples capas convolucionales, cada una seguida de normalización por lotes (Batch Normalization) y operaciones de max pooling. Estas capas convolucionales permitieron al modelo extraer características jerárquicas, mientras que la normalización por lotes mejoró la estabilidad del aprendizaje al reducir las variaciones en la distribución de activaciones entre los lotes de datos.
+
+El modelo también incluyó capas completamente conectadas con Dropout, lo que reforzó su capacidad de generalización. Este modelo fue entrenado durante 30 épocas, logrando un excelente desempeño. A continuación, se presentan las gráficas correspondientes al entrenamiento de este modelo y los resultados obtenidos en las métricas de pérdida y precisión:
+
 
 ![Training2](https://github.com/user-attachments/assets/9724b9dc-d2ed-4366-9e14-b700f1c61ddc)
 
